@@ -1,0 +1,10 @@
+unzip(zipfile = "exdata_data_household_power_consumption.zip")
+my_data<-read.table("household_power_consumption.txt",header=TRUE,sep=";")
+my_data<-my_data[66637:69516,]#I use grep() to find the number of row per each date
+my_data$datetime <- strptime(paste(my_data$Date, my_data$Time), format = "%d/%m/%Y %H:%M:%S")
+png("plot3.png")
+with(my_data,plot(datetime,Sub_metering_1,type="l",ylab = "Energy sub metering",xlab=""))
+with(my_data,lines(datetime,Sub_metering_2,col="red"))
+with(my_data,lines(datetime,Sub_metering_3,col="blue"))
+legend("topright",legend = c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"),lty = c(1,1,1))
+dev.off()
